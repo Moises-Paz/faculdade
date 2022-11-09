@@ -1,0 +1,153 @@
+/* Lógico_1: */
+
+CREATE TABLE productilines (
+    productLine VARCHAR(200) PRIMARY KEY,
+    textDescription VARCHAR(200),
+    htmlDescription VARCHAR(200),
+    image VARCHAR(200)
+);
+
+CREATE TABLE products (
+    productCode VARCHAR(200) PRIMARY KEY,
+    productName VARCHAR(200),
+    productLine VARCHAR(200),
+    productStale VARCHAR(200),
+    productVendor VARCHAR(200),
+    productDescription VARCHAR(200),
+    quantityInStock VARCHAR(200),
+    buyPrice VARCHAR(200),
+    MSRP VARCHAR(200),
+    fk_productilines_productLine VARCHAR(200)
+);
+
+CREATE TABLE employees (
+    employeeNumber VARCHAR(200) PRIMARY KEY,
+    lastName VARCHAR(200),
+    firstName VARCHAR(200),
+    extension VARCHAR(200),
+    email VARCHAR(200),
+    officeCode VARCHAR(200),
+    reportsTo VARCHAR(200),
+    jobTitle VARCHAR(200),
+    fk_offices_officeCode VARCHAR(200)
+);
+
+CREATE TABLE offices (
+    officeCode VARCHAR(200) PRIMARY KEY,
+    city VARCHAR(200),
+    fk_phone_phone_PK VARCHAR(200),
+    addressLine1 VARCHAR(200)VARCHAR(200),
+    addressLine2 VARCHAR(200),
+    state VARCHAR(200),
+    country VARCHAR(200),
+    pastalCode VARCHAR(200),
+    territory VARCHAR(200)
+);
+
+CREATE TABLE customers (
+    customerNumber VARCHAR(200) PRIMARY KEY,
+    customerName VARCHAR(200),
+    contactLastName VARCHAR(200),
+    contactFirstName VARCHAR(200),
+    fk_phone_phone_PK VARCHAR(200),
+    addressLine1 VARCHAR(200),
+    addressLine2 VARCHAR(200),
+    city VARCHAR(200),
+    state VARCHAR(200),
+    postalCode VARCHAR(200),
+    country VARCHAR(200),
+    salesRespEmployeerNumber VARCHAR(200),
+    creditLimit VARCHAR(200),
+    fk_employees_employeeNumber VARCHAR(200)
+);
+
+CREATE TABLE orderdetails (
+    orderNumber VARCHAR(200),
+    productCode VARCHAR(200),
+    quatityOrdered VARCHAR(200),
+    priceEach VARCHAR(200),
+    orderLineNumber VARCHAR(200),
+    fk_products_productCode VARCHAR(200),
+    fk_orders_orderNumber VARCHAR(200),
+    PRIMARY KEY (orderNumber, productCode)
+);
+
+CREATE TABLE orders (
+    orderNumber VARCHAR(200) PRIMARY KEY,
+    orderDate VARCHAR(200),
+    requiredDate VARCHAR(200),
+    shippedDate VARCHAR(200),
+    status VARCHAR(200),
+    comments VARCHAR(200),
+    customerNumber VARCHAR(200),
+    fk_customers_customerNumber VARCHAR(200)
+);
+
+CREATE TABLE payments (
+    customerNumber VARCHAR(200),
+    checkNumber VARCHAR(200),
+    paymentDate VARCHAR(200),
+    amount VARCHAR(200),
+    fk_customers_customerNumber VARCHAR(200),
+    PRIMARY KEY (customerNumber, checkNumber)
+);
+
+CREATE TABLE autoR01 (
+    fk_employees_employeeNumber VARCHAR(200),
+    fk_employees_employeeNumber_ VARCHAR(200)
+);
+ 
+ALTER TABLE products ADD CONSTRAINT FK_products_2
+    FOREIGN KEY (fk_productilines_productLine)
+    REFERENCES productilines (productLine)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE employees ADD CONSTRAINT FK_employees_2
+    FOREIGN KEY (fk_offices_officeCode)
+    REFERENCES offices (officeCode)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE offices ADD CONSTRAINT FK_offices_2
+    FOREIGN KEY (fk_phone_phone_PK)
+    REFERENCES phone (phone_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE customers ADD CONSTRAINT FK_customers_2
+    FOREIGN KEY (fk_phone_phone_PK)
+    REFERENCES phone (phone_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE customers ADD CONSTRAINT FK_customers_3
+    FOREIGN KEY (fk_employees_employeeNumber)
+    REFERENCES employees (employeeNumber)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE orderdetails ADD CONSTRAINT FK_orderdetails_2
+    FOREIGN KEY (fk_products_productCode)
+    REFERENCES products (productCode)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE orderdetails ADD CONSTRAINT FK_orderdetails_3
+    FOREIGN KEY (fk_orders_orderNumber)
+    REFERENCES orders (orderNumber)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE orders ADD CONSTRAINT FK_orders_2
+    FOREIGN KEY (fk_customers_customerNumber)
+    REFERENCES customers (customerNumber)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE payments ADD CONSTRAINT FK_payments_2
+    FOREIGN KEY (fk_customers_customerNumber)
+    REFERENCES customers (customerNumber)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE autoR01 ADD CONSTRAINT FK_autoR01_1
+    FOREIGN KEY (fk_employees_employeeNumber)
+    REFERENCES employees (employeeNumber)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE autoR01 ADD CONSTRAINT FK_autoR01_2
+    FOREIGN KEY (fk_employees_employeeNumber_)
+    REFERENCES employees (employeeNumber)
+    ON DELETE CASCADE;
